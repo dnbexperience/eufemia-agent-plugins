@@ -9,7 +9,7 @@ Claude Code and clients that implement Agent Plugins 1.0, including VS Code.
 
 ```bash
 claude plugin marketplace add dnbexperience/eufemia-agent-plugins
-claude plugin install eufemia@eufemia-plugins-official
+claude plugin install eufemia@eufemia-agent-plugins
 ```
 
 ### VS Code
@@ -36,7 +36,7 @@ A Claude plugin can depend on Eufemia with:
   "dependencies": [
     {
       "name": "eufemia",
-      "marketplace": "eufemia-plugins-official"
+      "marketplace": "eufemia-agent-plugins"
     }
   ]
 }
@@ -47,7 +47,7 @@ The declaring marketplace must also allow the cross-marketplace dependency:
 ```json
 {
   "allowCrossMarketplaceDependenciesOn": [
-    "eufemia-plugins-official"
+    "eufemia-agent-plugins"
   ]
 }
 ```

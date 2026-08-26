@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
-  "name": "eufemia-plugins-official",
+  "name": "eufemia-agent-plugins",
   "owner": {
     "name": "DNB",
     "url": "https://github.com/dnbexperience"
