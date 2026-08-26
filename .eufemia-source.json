@@ -1,0 +1,6 @@
+{
+  "repository": "dnbexperience/eufemia",
+  "ref": "8c6e49f57c0879e8ac1e1b192339f5ea3023fea1",
+  "generator": "tools/eufemia-raiwork-plugin",
+  "pluginVersion": "0.1.0"
+}

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "eufemia": {
+      "type": "http",
+      "url": "https://server.eufemia.dnb.no/mcp/web"
+    }
+  }
+}

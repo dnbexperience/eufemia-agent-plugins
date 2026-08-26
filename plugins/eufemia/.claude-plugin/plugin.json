@@ -1,0 +1,20 @@
+{
+  "name": "eufemia",
+  "version": "0.1.0",
+  "description": "Official Eufemia skills and MCP documentation for building, reviewing, and migrating DNB web frontends and contributing Portal content.",
+  "author": {
+    "name": "DNB"
+  },
+  "homepage": "https://eufemia.dnb.no",
+  "repository": "https://github.com/dnbexperience/eufemia-agent-plugins",
+  "license": "Apache-2.0 with Commons Clause",
+  "keywords": [
+    "dnb",
+    "eufemia",
+    "design-system",
+    "frontend",
+    "react",
+    "accessibility"
+  ],
+  "displayName": "Eufemia Web"
+}

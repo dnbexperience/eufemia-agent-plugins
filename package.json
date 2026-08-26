@@ -1,0 +1,13 @@
+{
+  "name": "eufemia-agent-plugins-marketplace",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "sync": "node scripts/sync.mjs"
+  },
+  "devDependencies": {
+    "ajv": "8.20.0"
+  }
+}

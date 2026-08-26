@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "eufemia": {
+      "type": "streamable-http",
+      "url": "https://server.eufemia.dnb.no/mcp/web"
+    }
+  }
+}

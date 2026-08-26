@@ -1,0 +1,38 @@
+name: Verify
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install validation dependencies
+        run: npm ci
+
+      - name: Validate Agent Plugins formats
+        run: npm run validate
+
+      - name: Validate Claude marketplace
+        run: npx --yes @anthropic-ai/claude-code@2.1.246 plugin validate . --strict
+
+      - name: Validate Claude plugin
+        run: npx --yes @anthropic-ai/claude-code@2.1.246 plugin validate plugins/eufemia --strict

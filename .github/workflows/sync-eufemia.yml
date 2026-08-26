@@ -1,0 +1,76 @@
+name: Sync Eufemia
+
+on:
+  workflow_dispatch:
+    inputs:
+      eufemia_ref:
+        description: Eufemia branch, tag, or commit to publish
+        required: true
+        default: main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout marketplace
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Checkout Eufemia
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          repository: dnbexperience/eufemia
+          ref: ${{ inputs.eufemia_ref }}
+          path: .upstream/eufemia
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Build from canonical Eufemia source
+        working-directory: .upstream/eufemia
+        run: |
+          corepack enable
+          yarn install --immutable
+          yarn workspace eufemia-raiwork-plugin build:agent
+
+      - name: Sync generated plugin
+        run: node scripts/sync.mjs .upstream/eufemia
+
+      - name: Validate generated marketplace
+        run: |
+          npm ci
+          npm run validate
+          npx --yes @anthropic-ai/claude-code@2.1.246 plugin validate . --strict
+          npx --yes @anthropic-ai/claude-code@2.1.246 plugin validate plugins/eufemia --strict
+
+      - name: Open update pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet; then
+            echo "Marketplace already matches the requested Eufemia ref."
+            exit 0
+          fi
+
+          source_ref="$(node -p "require('./.eufemia-source.json').ref")"
+          branch="automation/sync-eufemia-${GITHUB_RUN_ID}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add .eufemia-source.json plugins/eufemia
+          git commit -m "Update Eufemia plugin from ${source_ref:0:12}"
+          git push origin "$branch"
+          gh pr create \
+            --base main \
+            --head "$branch" \
+            --title "chore: update Eufemia plugin" \
+            --body "Generated from dnbexperience/eufemia@${source_ref}."
