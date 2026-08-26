@@ -77,7 +77,7 @@ const [pluginSchema, mcpSchema] = await Promise.all([
 validateSchema(pluginSchema, plugin, 'plugin.json')
 validateSchema(mcpSchema, mcp, 'mcp.json')
 
-assert(marketplace.name === 'eufemia-plugins-official', 'Invalid marketplace name')
+assert(marketplace.name === 'eufemia-agent-plugins', 'Invalid marketplace name')
 assert(marketplace.plugins?.length === 1, 'Marketplace must contain one plugin')
 assert(marketplace.plugins[0]?.name === 'eufemia', 'Invalid marketplace plugin name')
 assert(
